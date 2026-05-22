@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account - 3D Shoes Store</title>
+    <meta name="description" content="Manage your 3D Shoes account, view orders, wishlist and account settings">
+    
+    <!-- External Libraries -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 bg-white shadow-lg z-50 transition-all duration-300" id="navbar">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <!-- Logo -->
+                <div class="flex items-center space-x-2">
+                    <div class="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center">
+                        <i class="fas fa-running text-white text-lg"></i>
+                    </div>
+                    <a href="index.html" class="text-xl font-bold text-gray-800">3D Shoes</a>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="nav-link text-gray-700 hover:text-blue-600 transition-colors">Home</a>
+                    <a href="index.html#products" class="nav-link text-gray-700 hover:text-blue-600 transition-colors">Products</a>
+                    <a href="profile.html" class="nav-link text-gray-700 hover:text-blue-600 transition-colors">Profile</a>
+                    <a href="orders.html" class="nav-link text-gray-700 hover:text-blue-600 transition-colors">Orders</a>
+                </div>
+                
+                <!-- User Actions -->
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="p-2 text-gray-700 hover:text-blue-600 transition-colors">
+                        <i class="fas fa-home text-lg"></i>
+                    </a>
+                    <button id="logoutBtn" class="hidden bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors">
+                        <i class="fas fa-sign-out-alt mr-2"></i>Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Account Dashboard -->
+    <div class="pt-20">
+        <!-- Login Required Section -->
+        <div id="loginRequired" class="min-h-screen flex items-center justify-center">
+            <div class="text-center py-20">
+                <div class="bg-white rounded-lg shadow-lg p-12 max-w-md mx-auto">
+                    <i class="fas fa-user-lock text-6xl text-gray-400 mb-6"></i>
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">Login Required</h2>
+                    <p class="text-gray-600 mb-8">Please login to access your account dashboard.</p>
+                    <a href="index.html" class="inline-block bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                        Go to Login
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Content -->
+        <div id="dashboardContent" class="hidden">
+            <!-- Welcome Section -->
+            <div class="bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+                <div class="container mx-auto px-4 py-12">
+                    <div class="flex flex-col md:flex-row items-center justify-between">
+                        <div>
+                            <h1 id="welcomeMessage" class="text-4xl font-bold mb-2">Welcome Back!</h1>
+                            <p class="text-blue-100 text-lg">Manage your account and track your orders</p>
+                        </div>
+                        <div class="mt-6 md:mt-0">
+                            <div class="bg-white bg-opacity-20 rounded-lg p-6 text-center">
+                                <i class="fas fa-user-circle text-6xl mb-4"></i>
+                                <p id="accountType" class="font-semibold">Premium Member</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="container mx-auto px-4 -mt-8 relative z-10">
+                <div class="grid md:grid-cols-4 gap-6 mb-12">
+                    <div class="bg-white rounded-lg shadow-lg p-6 text-center">
+                        <i class="fas fa-shopping-bag text-3xl text-blue-600 mb-4"></i>
+                        <h3 class="text-2xl font-bold text-gray-800" id="totalOrders">0</h3>
+                        <p class="text-gray-600">Total Orders</p>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-lg p-6 text-center">
+                        <i class="fas fa-heart text-3xl text-red-600 mb-4"></i>
+                        <h3 class="text-2xl font-bold text-gray-800" id="wishlistItems">0</h3>
+                        <p class="text-gray-600">Wishlist Items</p>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-lg p-6 text-center">
+                        <i class="fas fa-star text-3xl text-yellow-600 mb-4"></i>
+                        <h3 class="text-2xl font-bold text-gray-800" id="loyaltyPoints">0</h3>
+                        <p class="text-gray-600">Loyalty Points</p>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-lg p-6 text-center">
+                        <i class="fas fa-calendar text-3xl text-green-600 mb-4"></i>
+                        <h3 class="text-2xl font-bold text-gray-800" id="memberSince">2024</h3>
+                        <p class="text-gray-600">Member Since</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="container mx-auto px-4 pb-12">
+                <div class="grid lg:grid-cols-3 gap-8">
+                    <!-- Left Column -->
+                    <div class="lg:col-span-2 space-y-8">
+                        <!-- Recent Orders -->
+                        <div class="bg-white rounded-lg shadow-lg p-6">
+                            <div class="flex justify-between items-center mb-6">
+                                <h3 class="text-xl font-bold text-gray-800">Recent Orders</h3>
+                                <a href="orders.html" class="text-blue-600 hover:text-blue-700 font-semibold">View All</a>
+                            </div>
+                            <div id="recentOrdersList" class="space-y-4">
+                                <div class="text-center py-8 text-gray-500">
+                                    <i class="fas fa-shopping-bag text-4xl mb-4"></i>
+                                    <p>No orders yet. Start shopping to see your orders here!</p>
+                                    <a href="index.html#products" class="inline-block mt-4 bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                                        Shop Now
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Wishlist Preview -->
+                        <div class="bg-white rounded-lg shadow-lg p-6">
+                            <div class="flex justify-between items-center mb-6">
+                                <h3 class="text-xl font-bold text-gray-800">Wishlist</h3>
+                                <a href="wishlist.html" class="text-blue-600 hover:text-blue-700 font-semibold">View All</a>
+                            </div>
+                            <div id="wishlistPreview" class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                                <div class="col-span-full text-center py-8 text-gray-500">
+                                    <i class="fas fa-heart text-4xl mb-4"></i>
+                                    <p>Your wishlist is empty. Add products to see them here!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column -->
+                    <div class="space-y-8">
+                        <!-- Quick Actions -->
+                        <div class="bg-white rounded-lg shadow-lg p-6">
+                            <h3 class="text-xl font-bold text-gray-800 mb-6">Quick Actions</h3>
+                            <div class="space-y-4">
+                                <a href="profile.html" class="flex items-center space-x-3 p-3 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors">
+                                    <i class="fas fa-user text-blue-600"></i>
+                                    <span class="font-semibold">Edit Profile</span>
+                                </a>
+                                <a href="orders.html" class="flex items-center space-x-3 p-3 bg-green-50 rounded-lg hover:bg-green-100 transition-colors">
+                                    <i class="fas fa-shopping-bag text-green-600"></i>
+                                    <span class="font-semibold">Track Orders</span>
+                                </a>
+                                <a href="wishlist.html" class="flex items-center space-x-3 p-3 bg-red-50 rounded-lg hover:bg-red-100 transition-colors">
+                                    <i class="fas fa-heart text-red-600"></i>
+                                    <span class="font-semibold">My Wishlist</span>
+                                </a>
+                                <a href="index.html#contact" class="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                                    <i class="fas fa-headset text-gray-600"></i>
+                                    <span class="font-semibold">Support</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Account Status -->
+                        <div class="bg-white rounded-lg shadow-lg p-6">
+                            <h3 class="text-xl font-bold text-gray-800 mb-6">Account Status</h3>
+                            <div class="space-y-4">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-600">Email Verified</span>
+                                    <i class="fas fa-check-circle text-green-600"></i>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-600">Phone Verified</span>
+                                    <i id="phoneVerificationStatus" class="fas fa-times-circle text-red-600"></i>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-600">2FA Enabled</span>
+                                    <i id="twoFactorStatus" class="fas fa-times-circle text-red-600"></i>
+                                </div>
+                                <button id="verifyAccountBtn" class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                                    Complete Verification
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Loyalty Program -->
+                        <div class="bg-gradient-to-br from-yellow-400 to-orange-500 rounded-lg shadow-lg p-6 text-white">
+                            <h3 class="text-xl font-bold mb-4">Loyalty Program</h3>
+                            <div class="mb-4">
+                                <div class="flex justify-between items-center mb-2">
+                                    <span>Progress to Gold</span>
+                                    <span id="loyaltyProgress">25%</span>
+                                </div>
+                                <div class="bg-white bg-opacity-30 rounded-full h-3">
+                                    <div id="loyaltyBar" class="bg-white rounded-full h-3 transition-all duration-500" style="width: 25%"></div>
+                                </div>
+                            </div>
+                            <p class="text-sm text-yellow-100">Spend ₹7,500 more to reach Gold status and unlock exclusive benefits!</p>
+                        </div>
+
+                        <!-- Newsletter Subscription -->
+                        <div class="bg-white rounded-lg shadow-lg p-6">
+                            <h3 class="text-xl font-bold text-gray-800 mb-4">Stay Updated</h3>
+                            <p class="text-gray-600 mb-4">Get notified about new arrivals and exclusive offers.</p>
+                            <div class="space-y-3">
+                                <label class="flex items-center space-x-3">
+                                    <input type="checkbox" id="emailUpdates" checked class="text-blue-600 rounded">
+                                    <span class="text-sm">Email updates</span>
+                                </label>
+                                <label class="flex items-center space-x-3">
+                                    <input type="checkbox" id="smsUpdates" class="text-blue-600 rounded">
+                                    <span class="text-sm">SMS notifications</span>
+                                </label>
+                                <button id="updatePreferencesBtn" class="w-full bg-gray-800 text-white py-2 rounded-lg hover:bg-gray-900 transition-colors">
+                                    Update Preferences
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4 text-center">
+            <div class="flex items-center justify-center space-x-2 mb-6">
+                <div class="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center">
+                    <i class="fas fa-running text-white text-lg"></i>
+                </div>
+                <span class="text-xl font-bold">3D Shoes</span>
+            </div>
+            <p class="text-gray-300">&copy; 2024 3D Shoes. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner" class="fixed inset-0 bg-white bg-opacity-90 flex items-center justify-center z-50 hidden">
+        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/account-dashboard.js"></script>
+</body>
+</html>
