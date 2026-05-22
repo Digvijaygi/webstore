@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - 3D Shoes Store</title>
+    <meta name="description" content="Complete your purchase at 3D Shoes Store - secure checkout process">
+    
+    <!-- External Libraries -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 bg-white shadow-lg z-50 transition-all duration-300" id="navbar">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <!-- Logo -->
+                <div class="flex items-center space-x-2">
+                    <div class="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center">
+                        <i class="fas fa-running text-white text-lg"></i>
+                    </div>
+                    <a href="index.html" class="text-xl font-bold text-gray-800">3D Shoes</a>
+                </div>
+                
+                <!-- Checkout Steps -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <div class="flex items-center space-x-4 text-sm">
+                        <div class="step-indicator active" data-step="1">
+                            <span class="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center">1</span>
+                            <span class="ml-2">Shipping</span>
+                        </div>
+                        <i class="fas fa-chevron-right text-gray-400"></i>
+                        <div class="step-indicator" data-step="2">
+                            <span class="w-8 h-8 bg-gray-300 text-gray-600 rounded-full flex items-center justify-center">2</span>
+                            <span class="ml-2">Payment</span>
+                        </div>
+                        <i class="fas fa-chevron-right text-gray-400"></i>
+                        <div class="step-indicator" data-step="3">
+                            <span class="w-8 h-8 bg-gray-300 text-gray-600 rounded-full flex items-center justify-center">3</span>
+                            <span class="ml-2">Review</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Security Badge -->
+                <div class="flex items-center space-x-2 text-green-600">
+                    <i class="fas fa-lock"></i>
+                    <span class="text-sm font-semibold">Secure Checkout</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Checkout Content -->
+    <div class="pt-20">
+        <!-- Login Required Section -->
+        <div id="loginRequired" class="min-h-screen flex items-center justify-center">
+            <div class="text-center py-20">
+                <div class="bg-white rounded-lg shadow-lg p-12 max-w-md mx-auto">
+                    <i class="fas fa-user-lock text-6xl text-gray-400 mb-6"></i>
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">Login Required</h2>
+                    <p class="text-gray-600 mb-8">Please login to proceed with checkout.</p>
+                    <a href="index.html" class="inline-block bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                        Go to Login
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Empty Cart Section -->
+        <div id="emptyCartSection" class="hidden min-h-screen flex items-center justify-center">
+            <div class="text-center py-20">
+                <div class="bg-white rounded-lg shadow-lg p-12 max-w-md mx-auto">
+                    <i class="fas fa-shopping-cart text-6xl text-gray-400 mb-6"></i>
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">Your Cart is Empty</h2>
+                    <p class="text-gray-600 mb-8">Add some products to your cart to proceed with checkout.</p>
+                    <a href="index.html#products" class="inline-block bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                        Continue Shopping
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Checkout Process -->
+        <div id="checkoutProcess" class="hidden">
+            <div class="container mx-auto px-4 py-12">
+                <div class="max-w-6xl mx-auto">
+                    <div class="grid lg:grid-cols-3 gap-8">
+                        <!-- Main Checkout Form -->
+                        <div class="lg:col-span-2">
+                            <!-- Step 1: Shipping Information -->
+                            <div id="step1" class="checkout-step">
+                                <div class="bg-white rounded-lg shadow-sm p-8 mb-8">
+                                    <h2 class="text-2xl font-bold text-gray-800 mb-6">
+                                        <i class="fas fa-shipping-fast text-blue-600 mr-3"></i>
+                                        Shipping Information
+                                    </h2>
+                                    
+                                    <form id="shippingForm" class="space-y-6">
+                                        <div class="grid md:grid-cols-2 gap-6">
+                                            <div>
+                                                <label for="firstName" class="block text-gray-700 font-semibold mb-2">First Name *</label>
+                                                <input type="text" id="firstName" required
+                                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                       placeholder="Enter first name">
+                                            </div>
+                                            <div>
+                                                <label for="lastName" class="block text-gray-700 font-semibold mb-2">Last Name *</label>
+                                                <input type="text" id="lastName" required
+                                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                       placeholder="Enter last name">
+                                            </div>
+                                        </div>
+                                        
+                                        <div>
+                                            <label for="email" class="block text-gray-700 font-semibold mb-2">Email Address *</label>
+                                            <input type="email" id="email" required
+                                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                   placeholder="Enter email address">
+                                        </div>
+                                        
+                                        <div>
+                                            <label for="phone" class="block text-gray-700 font-semibold mb-2">Phone Number *</label>
+                                            <input type="tel" id="phone" required
+                                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                   placeholder="Enter phone number">
+                                        </div>
+                                        
+                                        <div>
+                                            <label for="address" class="block text-gray-700 font-semibold mb-2">Street Address *</label>
+                                            <input type="text" id="address" required
+                                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                   placeholder="Enter street address">
+                                        </div>
+                                        
+                                        <div class="grid md:grid-cols-3 gap-6">
+                                            <div>
+                                                <label for="city" class="block text-gray-700 font-semibold mb-2">City *</label>
+                                                <input type="text" id="city" required
+                                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                       placeholder="Enter city">
+                                            </div>
+                                            <div>
+                                                <label for="state" class="block text-gray-700 font-semibold mb-2">State *</label>
+                                                <select id="state" required
+                                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                                    <option value="">Select State</option>
+                                                    <option value="Maharashtra">Maharashtra</option>
+                                                    <option value="Delhi">Delhi</option>
+                                                    <option value="Karnataka">Karnataka</option>
+                                                    <option value="Tamil Nadu">Tamil Nadu</option>
+                                                    <option value="Gujarat">Gujarat</option>
+                                                    <option value="West Bengal">West Bengal</option>
+                                                    <option value="Rajasthan">Rajasthan</option>
+                                                    <option value="Uttar Pradesh">Uttar Pradesh</option>
+                                                </select>
+                                            </div>
+                                            <div>
+                                                <label for="pincode" class="block text-gray-700 font-semibold mb-2">Pin Code *</label>
+                                                <input type="text" id="pincode" required pattern="[0-9]{6}"
+                                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                       placeholder="Enter pin code">
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="flex justify-end">
+                                            <button type="button" id="continueToPayment" class="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                                                Continue to Payment
+                                                <i class="fas fa-arrow-right ml-2"></i>
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <!-- Step 2: Payment Information -->
+                            <div id="step2" class="checkout-step hidden">
+                                <div class="bg-white rounded-lg shadow-sm p-8 mb-8">
+                                    <h2 class="text-2xl font-bold text-gray-800 mb-6">
+                                        <i class="fas fa-credit-card text-green-600 mr-3"></i>
+                                        Payment Method
+                                    </h2>
+                                    
+                                    <!-- Payment Options -->
+                                    <div class="space-y-4 mb-8">
+                                        <div class="payment-option border-2 border-blue-500 bg-blue-50 rounded-lg p-4 cursor-pointer" data-method="card">
+                                            <div class="flex items-center space-x-4">
+                                                <input type="radio" name="paymentMethod" value="card" checked class="text-blue-600">
+                                                <i class="fas fa-credit-card text-2xl text-blue-600"></i>
+                                                <div>
+                                                    <h3 class="font-semibold text-gray-800">Credit/Debit Card</h3>
+                                                    <p class="text-sm text-gray-600">Visa, MasterCard, American Express</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="payment-option border-2 border-gray-200 rounded-lg p-4 cursor-pointer" data-method="upi">
+                                            <div class="flex items-center space-x-4">
+                                                <input type="radio" name="paymentMethod" value="upi" class="text-blue-600">
+                                                <i class="fas fa-mobile-alt text-2xl text-purple-600"></i>
+                                                <div>
+                                                    <h3 class="font-semibold text-gray-800">UPI Payment</h3>
+                                                    <p class="text-sm text-gray-600">GPay, PhonePe, Paytm, BHIM UPI</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="payment-option border-2 border-gray-200 rounded-lg p-4 cursor-pointer" data-method="wallet">
+                                            <div class="flex items-center space-x-4">
+                                                <input type="radio" name="paymentMethod" value="wallet" class="text-blue-600">
+                                                <i class="fas fa-wallet text-2xl text-orange-600"></i>
+                                                <div>
+                                                    <h3 class="font-semibold text-gray-800">Digital Wallet</h3>
+                                                    <p class="text-sm text-gray-600">Paytm, PhonePe, Amazon Pay</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="payment-option border-2 border-gray-200 rounded-lg p-4 cursor-pointer" data-method="cod">
+                                            <div class="flex items-center space-x-4">
+                                                <input type="radio" name="paymentMethod" value="cod" class="text-blue-600">
+                                                <i class="fas fa-money-bill-wave text-2xl text-green-600"></i>
+                                                <div>
+                                                    <h3 class="font-semibold text-gray-800">Cash on Delivery</h3>
+                                                    <p class="text-sm text-gray-600">Pay when you receive your order</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Card Details Form -->
+                                    <div id="cardDetailsForm" class="space-y-6">
+                                        <div>
+                                            <label for="cardNumber" class="block text-gray-700 font-semibold mb-2">Card Number *</label>
+                                            <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456"
+                                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                   maxlength="19">
+                                        </div>
+                                        
+                                        <div class="grid md:grid-cols-2 gap-6">
+                                            <div>
+                                                <label for="expiryDate" class="block text-gray-700 font-semibold mb-2">Expiry Date *</label>
+                                                <input type="text" id="expiryDate" placeholder="MM/YY"
+                                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                       maxlength="5">
+                                            </div>
+                                            <div>
+                                                <label for="cvv" class="block text-gray-700 font-semibold mb-2">CVV *</label>
+                                                <input type="text" id="cvv" placeholder="123"
+                                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                       maxlength="4">
+                                            </div>
+                                        </div>
+                                        
+                                        <div>
+                                            <label for="cardName" class="block text-gray-700 font-semibold mb-2">Name on Card *</label>
+                                            <input type="text" id="cardName"
+                                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                   placeholder="Enter name as on card">
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- UPI Details Form -->
+                                    <div id="upiDetailsForm" class="space-y-6 hidden">
+                                        <div>
+                                            <label for="upiId" class="block text-gray-700 font-semibold mb-2">UPI ID</label>
+                                            <input type="text" id="upiId" placeholder="username@paytm"
+                                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex justify-between mt-8">
+                                        <button type="button" id="backToShipping" class="bg-gray-500 text-white px-8 py-3 rounded-lg font-semibold hover:bg-gray-600 transition-colors">
+                                            <i class="fas fa-arrow-left mr-2"></i>Back to Shipping
+                                        </button>
+                                        <button type="button" id="continueToReview" class="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                                            Continue to Review
+                                            <i class="fas fa-arrow-right ml-2"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Step 3: Order Review -->
+                            <div id="step3" class="checkout-step hidden">
+                                <div class="bg-white rounded-lg shadow-sm p-8 mb-8">
+                                    <h2 class="text-2xl font-bold text-gray-800 mb-6">
+                                        <i class="fas fa-check-circle text-green-600 mr-3"></i>
+                                        Review Your Order
+                                    </h2>
+                                    
+                                    <div id="orderReviewContent" class="space-y-8">
+                                        <!-- Order review will be populated here -->
+                                    </div>
+                                    
+                                    <div class="flex justify-between mt-8">
+                                        <button type="button" id="backToPayment" class="bg-gray-500 text-white px-8 py-3 rounded-lg font-semibold hover:bg-gray-600 transition-colors">
+                                            <i class="fas fa-arrow-left mr-2"></i>Back to Payment
+                                        </button>
+                                        <button type="button" id="placeOrder" class="bg-green-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors">
+                                            <i class="fas fa-lock mr-2"></i>Place Order
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Order Summary Sidebar -->
+                        <div class="lg:col-span-1">
+                            <div class="bg-white rounded-lg shadow-sm p-6 sticky top-24">
+                                <h3 class="text-xl font-bold text-gray-800 mb-6">Order Summary</h3>
+                                
+                                <div id="orderSummaryItems" class="space-y-4 mb-6">
+                                    <!-- Cart items will be displayed here -->
+                                </div>
+                                
+                                <div class="border-t border-gray-200 pt-4 space-y-3">
+                                    <div class="flex justify-between text-gray-600">
+                                        <span>Subtotal:</span>
+                                        <span id="subtotalAmount">₹0</span>
+                                    </div>
+                                    <div class="flex justify-between text-gray-600">
+                                        <span>Shipping:</span>
+                                        <span id="shippingAmount">₹99</span>
+                                    </div>
+                                    <div class="flex justify-between text-gray-600">
+                                        <span>Tax:</span>
+                                        <span id="taxAmount">₹0</span>
+                                    </div>
+                                    <div class="border-t border-gray-200 pt-3">
+                                        <div class="flex justify-between text-xl font-bold text-gray-800">
+                                            <span>Total:</span>
+                                            <span id="totalAmount">₹0</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Promotional Code -->
+                                <div class="border-t border-gray-200 pt-4">
+                                    <div class="flex space-x-2">
+                                        <input type="text" id="promoCode" placeholder="Enter promo code"
+                                               class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                        <button id="applyPromoCode" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                                            Apply
+                                        </button>
+                                    </div>
+                                    <div id="promoMessage" class="mt-2 text-sm hidden"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Success Modal -->
+    <div id="orderSuccessModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-lg w-full max-w-md p-8 text-center">
+                <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="fas fa-check text-3xl text-green-600"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-800 mb-4">Order Placed Successfully!</h3>
+                <p class="text-gray-600 mb-6">Thank you for your purchase. Your order has been confirmed and will be processed shortly.</p>
+                <div class="space-y-4">
+                    <p class="text-lg font-semibold">Order ID: <span id="orderConfirmationId" class="text-blue-600">#12345</span></p>
+                    <div class="flex space-x-4">
+                        <button id="continueShoppingBtn" class="flex-1 bg-gray-500 text-white py-3 rounded-lg font-semibold hover:bg-gray-600 transition-colors">
+                            Continue Shopping
+                        </button>
+                        <button id="trackOrderBtn" class="flex-1 bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                            Track Order
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner" class="fixed inset-0 bg-white bg-opacity-90 flex items-center justify-center z-50 hidden">
+        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/checkout-page.js"></script>
+</body>
+</html>

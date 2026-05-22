@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details - 3D Shoes Store</title>
+    <meta name="description" content="View detailed information about our premium 3D shoes">
+    
+    <!-- External Libraries -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 bg-white shadow-lg z-50 transition-all duration-300" id="navbar">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <!-- Logo -->
+                <div class="flex items-center space-x-2">
+                    <div class="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center">
+                        <i class="fas fa-running text-white text-lg"></i>
+                    </div>
+                    <a href="index.html" class="text-xl font-bold text-gray-800">3D Shoes</a>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="nav-link text-gray-700 hover:text-blue-600 transition-colors">Home</a>
+                    <a href="index.html#products" class="nav-link text-gray-700 hover:text-blue-600 transition-colors">Products</a>
+                    <a href="wishlist.html" class="nav-link text-gray-700 hover:text-blue-600 transition-colors">Wishlist</a>
+                    <a href="account.html" class="nav-link text-gray-700 hover:text-blue-600 transition-colors">Account</a>
+                </div>
+                
+                <!-- User Actions -->
+                <div class="flex items-center space-x-4">
+                    <button id="cartBtn" class="relative p-2 text-gray-700 hover:text-blue-600 transition-colors">
+                        <i class="fas fa-shopping-cart text-lg"></i>
+                        <span id="cartCount" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full px-1 min-w-[18px] h-[18px] flex items-center justify-center hidden">0</span>
+                    </button>
+                    <div class="relative">
+                        <button id="profileBtn" class="p-2 text-gray-700 hover:text-blue-600 transition-colors">
+                            <i class="fas fa-user text-lg"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Breadcrumb -->
+    <div class="pt-20 bg-white border-b">
+        <div class="container mx-auto px-4 py-4">
+            <nav class="flex text-sm" aria-label="Breadcrumb">
+                <ol class="inline-flex items-center space-x-1 md:space-x-3">
+                    <li class="inline-flex items-center">
+                        <a href="index.html" class="text-gray-700 hover:text-blue-600 inline-flex items-center">
+                            <i class="fas fa-home mr-2"></i>Home
+                        </a>
+                    </li>
+                    <i class="fas fa-chevron-right text-gray-400"></i>
+                    <li>
+                        <a href="index.html#products" class="text-gray-700 hover:text-blue-600">Products</a>
+                    </li>
+                    <i class="fas fa-chevron-right text-gray-400"></i>
+                    <li class="text-gray-500" id="breadcrumbProduct">Product</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Product Not Found -->
+    <div id="productNotFound" class="hidden min-h-screen flex items-center justify-center">
+        <div class="text-center py-20">
+            <div class="bg-white rounded-lg shadow-lg p-12 max-w-md mx-auto">
+                <i class="fas fa-exclamation-triangle text-6xl text-yellow-500 mb-6"></i>
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Product Not Found</h2>
+                <p class="text-gray-600 mb-8">The product you're looking for doesn't exist or has been removed.</p>
+                <a href="index.html#products" class="inline-block bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                    Browse Products
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Details -->
+    <div id="productDetails" class="hidden">
+        <div class="container mx-auto px-4 py-12">
+            <div class="max-w-6xl mx-auto">
+                <div class="grid lg:grid-cols-2 gap-12">
+                    <!-- Product Images -->
+                    <div>
+                        <!-- Main Image -->
+                        <div class="mb-6">
+                            <div class="relative bg-white rounded-lg overflow-hidden shadow-lg">
+                                <img id="mainProductImage" src="" alt="Product" class="w-full h-96 object-cover">
+                                <div class="absolute top-4 left-4">
+                                    <span id="discountBadge" class="hidden bg-red-600 text-white px-3 py-1 text-sm font-semibold rounded">25% OFF</span>
+                                </div>
+                                <button id="wishlistBtn" class="absolute top-4 right-4 w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-400 hover:text-red-500 transition-colors">
+                                    <i class="far fa-heart text-xl"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Thumbnail Images -->
+                        <div id="thumbnailContainer" class="flex space-x-4 overflow-x-auto pb-2">
+                            <!-- Thumbnails will be added dynamically -->
+                        </div>
+                        
+                        <!-- 360° View -->
+                        <div class="mt-6">
+                            <button id="view360Btn" class="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white py-3 rounded-lg font-semibold hover:from-purple-700 hover:to-blue-700 transition-colors">
+                                <i class="fas fa-sync-alt mr-2"></i>360° View
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Product Information -->
+                    <div>
+                        <div class="mb-6">
+                            <p id="productBrand" class="text-gray-600 font-semibold mb-2">Brand</p>
+                            <h1 id="productName" class="text-3xl font-bold text-gray-800 mb-4">Product Name</h1>
+                            
+                            <!-- Rating -->
+                            <div class="flex items-center mb-4">
+                                <div id="productRating" class="flex text-yellow-400 mr-3">
+                                    <!-- Stars will be added dynamically -->
+                                </div>
+                                <span id="ratingText" class="text-gray-600">4.5 (128 reviews)</span>
+                                <a href="#reviews" class="text-blue-600 hover:text-blue-700 ml-2">See all reviews</a>
+                            </div>
+
+                            <!-- Price -->
+                            <div class="mb-6">
+                                <div class="flex items-center space-x-4">
+                                    <span id="currentPrice" class="text-4xl font-bold text-gray-800">₹12,999</span>
+                                    <span id="originalPrice" class="hidden text-xl text-gray-500 line-through">₹15,999</span>
+                                    <span id="savingsAmount" class="hidden text-lg text-green-600 font-semibold">Save ₹3,000</span>
+                                </div>
+                                <p class="text-sm text-gray-600 mt-1">Inclusive of all taxes • <span id="emiInfo" class="text-blue-600">EMI starting from ₹541/month</span></p>
+                            </div>
+
+                            <!-- Stock Status -->
+                            <div class="mb-6">
+                                <div id="stockStatus" class="flex items-center">
+                                    <i class="fas fa-check-circle text-green-600 mr-2"></i>
+                                    <span class="text-green-600 font-semibold">In Stock</span>
+                                </div>
+                                <p class="text-sm text-gray-600 mt-1">Only <span id="stockCount" class="font-semibold">5</span> left in stock!</p>
+                            </div>
+                        </div>
+
+                        <!-- Size Selection -->
+                        <div class="mb-6">
+                            <h3 class="text-lg font-semibold text-gray-800 mb-3">Select Size</h3>
+                            <div id="sizeOptions" class="grid grid-cols-4 gap-3">
+                                <!-- Size buttons will be added dynamically -->
+                            </div>
+                            <a href="#" class="text-blue-600 hover:text-blue-700 text-sm mt-2 inline-block">Size Guide</a>
+                        </div>
+
+                        <!-- Color Selection -->
+                        <div class="mb-6">
+                            <h3 class="text-lg font-semibold text-gray-800 mb-3">Select Color</h3>
+                            <div id="colorOptions" class="flex space-x-3">
+                                <!-- Color buttons will be added dynamically -->
+                            </div>
+                        </div>
+
+                        <!-- Quantity Selection -->
+                        <div class="mb-6">
+                            <h3 class="text-lg font-semibold text-gray-800 mb-3">Quantity</h3>
+                            <div class="flex items-center space-x-4">
+                                <button id="decreaseQty" class="w-10 h-10 bg-gray-200 rounded-lg flex items-center justify-center hover:bg-gray-300 transition-colors">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <span id="quantity" class="text-xl font-semibold w-12 text-center">1</span>
+                                <button id="increaseQty" class="w-10 h-10 bg-gray-200 rounded-lg flex items-center justify-center hover:bg-gray-300 transition-colors">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="space-y-4 mb-8">
+                            <button id="addToCartBtn" class="w-full bg-blue-600 text-white py-4 rounded-lg font-semibold text-lg hover:bg-blue-700 transition-colors flex items-center justify-center">
+                                <i class="fas fa-shopping-cart mr-2"></i>Add to Cart
+                            </button>
+                            <button id="buyNowBtn" class="w-full bg-green-600 text-white py-4 rounded-lg font-semibold text-lg hover:bg-green-700 transition-colors flex items-center justify-center">
+                                <i class="fas fa-bolt mr-2"></i>Buy Now
+                            </button>
+                        </div>
+
+                        <!-- Key Features -->
+                        <div class="border-t border-gray-200 pt-6">
+                            <h3 class="text-lg font-semibold text-gray-800 mb-4">Key Features</h3>
+                            <div id="keyFeatures" class="space-y-3">
+                                <!-- Features will be added dynamically -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Tabs -->
+                <div class="mt-12">
+                    <div class="border-b border-gray-200">
+                        <nav class="flex space-x-8">
+                            <button class="product-tab active py-4 px-2 border-b-2 border-blue-600 text-blue-600 font-semibold" data-tab="description">
+                                Description
+                            </button>
+                            <button class="product-tab py-4 px-2 border-b-2 border-transparent text-gray-700 hover:text-blue-600 font-semibold" data-tab="specifications">
+                                Specifications
+                            </button>
+                            <button class="product-tab py-4 px-2 border-b-2 border-transparent text-gray-700 hover:text-blue-600 font-semibold" data-tab="reviews">
+                                Reviews <span id="reviewCount" class="text-sm">(0)</span>
+                            </button>
+                            <button class="product-tab py-4 px-2 border-b-2 border-transparent text-gray-700 hover:text-blue-600 font-semibold" data-tab="shipping">
+                                Shipping & Returns
+                            </button>
+                        </nav>
+                    </div>
+
+                    <!-- Tab Content -->
+                    <div class="py-8">
+                        <!-- Description Tab -->
+                        <div id="descriptionTab" class="tab-content">
+                            <div class="prose max-w-none">
+                                <div id="productDescription" class="text-gray-700 leading-relaxed">
+                                    <!-- Description will be loaded dynamically -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Specifications Tab -->
+                        <div id="specificationsTab" class="tab-content hidden">
+                            <div class="grid md:grid-cols-2 gap-8">
+                                <div id="productSpecifications">
+                                    <!-- Specifications will be loaded dynamically -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Reviews Tab -->
+                        <div id="reviewsTab" class="tab-content hidden">
+                            <div class="max-w-4xl">
+                                <!-- Review Summary -->
+                                <div class="bg-gray-50 rounded-lg p-6 mb-8">
+                                    <div class="grid md:grid-cols-3 gap-6">
+                                        <div class="text-center">
+                                            <div class="text-4xl font-bold text-gray-800" id="avgRating">4.5</div>
+                                            <div class="flex justify-center text-yellow-400 mb-2" id="avgRatingStars">
+                                                <!-- Stars will be added -->
+                                            </div>
+                                            <p class="text-gray-600">Based on <span id="totalReviews">128</span> reviews</p>
+                                        </div>
+                                        <div class="md:col-span-2">
+                                            <div id="ratingBreakdown" class="space-y-2">
+                                                <!-- Rating breakdown will be added -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Write Review -->
+                                <div class="mb-8">
+                                    <button id="writeReviewBtn" class="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                                        <i class="fas fa-star mr-2"></i>Write a Review
+                                    </button>
+                                </div>
+
+                                <!-- Reviews List -->
+                                <div id="reviewsList" class="space-y-6">
+                                    <!-- Reviews will be loaded dynamically -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Shipping Tab -->
+                        <div id="shippingTab" class="tab-content hidden">
+                            <div class="grid md:grid-cols-2 gap-8">
+                                <div>
+                                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Shipping Information</h3>
+                                    <div class="space-y-4">
+                                        <div class="flex items-start space-x-3">
+                                            <i class="fas fa-shipping-fast text-blue-600 mt-1"></i>
+                                            <div>
+                                                <h4 class="font-semibold text-gray-800">Fast Delivery</h4>
+                                                <p class="text-gray-600">Get your order delivered within 2-5 business days</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-start space-x-3">
+                                            <i class="fas fa-gift text-green-600 mt-1"></i>
+                                            <div>
+                                                <h4 class="font-semibold text-gray-800">Free Shipping</h4>
+                                                <p class="text-gray-600">On orders above ₹2,000</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-start space-x-3">
+                                            <i class="fas fa-clock text-orange-600 mt-1"></i>
+                                            <div>
+                                                <h4 class="font-semibold text-gray-800">Same Day Delivery</h4>
+                                                <p class="text-gray-600">Available in select cities for orders before 2 PM</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Returns & Exchanges</h3>
+                                    <div class="space-y-4">
+                                        <div class="flex items-start space-x-3">
+                                            <i class="fas fa-undo text-purple-600 mt-1"></i>
+                                            <div>
+                                                <h4 class="font-semibold text-gray-800">30-Day Returns</h4>
+                                                <p class="text-gray-600">Easy returns within 30 days of delivery</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-start space-x-3">
+                                            <i class="fas fa-exchange-alt text-teal-600 mt-1"></i>
+                                            <div>
+                                                <h4 class="font-semibold text-gray-800">Size Exchange</h4>
+                                                <p class="text-gray-600">Free size exchange if the fit isn't right</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-start space-x-3">
+                                            <i class="fas fa-shield-alt text-red-600 mt-1"></i>
+                                            <div>
+                                                <h4 class="font-semibold text-gray-800">Quality Guarantee</h4>
+                                                <p class="text-gray-600">100% authentic products with quality guarantee</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Related Products -->
+                <div class="mt-16">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-8">You Might Also Like</h2>
+                    <div id="relatedProducts" class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                        <!-- Related products will be loaded dynamically -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 360° View Modal -->
+    <div id="view360Modal" class="fixed inset-0 bg-black bg-opacity-90 z-50 hidden">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-lg w-full max-w-2xl p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-xl font-bold text-gray-800">360° Product View</h3>
+                    <button id="close360Modal" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                <div class="text-center">
+                    <img id="view360Image" src="" alt="360 View" class="w-full h-96 object-cover rounded-lg mb-4">
+                    <p class="text-gray-600">Drag to rotate • <span id="rotationAngle">0°</span></p>
+                    <div class="mt-4 flex justify-center">
+                        <button id="autoRotateBtn" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                            <i class="fas fa-play mr-2"></i>Auto Rotate
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner" class="fixed inset-0 bg-white bg-opacity-90 flex items-center justify-center z-50 hidden">
+        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/product-detail.js"></script>
+</body>
+</html>
